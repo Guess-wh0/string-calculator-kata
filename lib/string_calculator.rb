@@ -4,8 +4,7 @@ class StringCalculator
 
   private def valid_format?
     char_format = /[^0-9#{delimiter}\-\n]/
-    valid_format = (INVALID_FORMATS + [char_format]).none? { |exp| exp.match?(expression) }
-    valid_format
+    (INVALID_FORMATS + [char_format]).none? { |exp| exp.match?(expression) }
   end
 
   private def positive_validation

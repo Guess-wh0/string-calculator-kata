@@ -77,4 +77,56 @@ describe StringCalculator do
       expect { calc.add("//-\n1--2-3") }.to raise_error(ArgumentError, 'negative numbers not allowed -2')
     end
   end
+
+  context '#valid_format?' do
+    let(:calculator) { StringCalculator.new }
+
+    context "valid string" do
+      before do
+        calculator.expression = '1,2,3'
+        calculator.delimiter = ','
+      end
+
+      it 'should return true' do
+        expect(calculator.send(:valid_format?)).to be true
+      end
+    end
+
+    context "invalid string" do
+      before do
+        calculator.expression = '1,2,3,'
+        calculator.delimiter = ','
+      end
+
+      it 'should return true' do
+        expect(calculator.send(:valid_format?)).to be false
+      end
+    end
+  end
+
+  context '#positive_validation' do
+    let(:calculator) { StringCalculator.new }
+
+    context "valid string" do
+      before do
+        calculator.expression = '1,2,3'
+        calculator.delimiter = ','
+      end
+
+      it 'should return true' do
+        expect(calculator.send(:positive_validation)).to be nil
+      end
+    end
+
+    context "invalid string" do
+      before do
+        calculator.expression = '1,2,-3'
+        calculator.delimiter = ','
+      end
+
+      it 'should return true' do
+        expect { calculator.send(:positive_validation) }.to raise_error(ArgumentError, 'negative numbers not allowed -3')
+      end
+    end
+  end
 end

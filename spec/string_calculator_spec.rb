@@ -4,6 +4,22 @@ require 'spec_helper'
 describe StringCalculator do
   calc = StringCalculator.new
 
+  it { StringCalculator.should be_const_defined(:INVALID_FORMATS) } 
+
+  context 'attributes' do
+    let(:calculator) { StringCalculator.new }
+
+    it 'has a getter and setter for expression' do
+      calculator.expression = '1+2+3'
+      expect(calculator.expression).to eq '1+2+3'
+    end
+
+    it 'has a getter and setter for delimiter' do
+      calculator.delimiter = '-'
+      expect(calculator.delimiter).to eq '-'
+    end
+  end
+
   context '#add' do
     it 'should return 0 on empty string' do
       expect(calc.add('')).to eq(0)

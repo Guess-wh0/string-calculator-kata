@@ -13,6 +13,6 @@ class StringCalculator
     unless valid?(expression)
       raise ArgumentError, 'Invalid format'
     end
-    expression.split(',').map(&:to_i).sum
+    expression.split(/[,\n]/).map(&:to_i).sum
   end
 end

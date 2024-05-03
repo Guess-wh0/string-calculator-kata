@@ -18,7 +18,15 @@ describe StringCalculator do
     end
 
     it 'should return correct sum for string with \n b/w numbers "1,2,\n3,4"' do
-      expect(calc.add("1,2,\n3,4"))
+      expect(calc.add("1,2,\n3,4")).to eq(10)
+    end
+
+    it 'should return correct sum for string with \n as delimiter "1\n2\n3\n4"' do
+      expect(calc.add("1\n2\n3\n4")).to eq(10)
+    end
+
+    it 'should return correct sum for string with both comma and \n "1,2\n3,4"' do
+      expect(calc.add("1,2\n3,4")).to eq(10)
     end
 
     it 'raises FormatError for "1,2,4,"' do

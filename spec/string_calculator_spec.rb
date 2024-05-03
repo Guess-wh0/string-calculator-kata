@@ -29,23 +29,23 @@ describe StringCalculator do
       expect(calc.add("1,2\n3,4")).to eq(10)
     end
 
-    it 'raises FormatError for "1,2,4,"' do
+    it 'raises ArgumentError for "1,2,4,"' do
       expect { calc.add("1,2,4,") }.to raise_error(ArgumentError, 'Invalid format')
     end
 
-    it 'raises FormatError for "1,2,4,\n\n\n"' do
+    it 'raises ArgumentError for "1,2,4,\n\n\n"' do
       expect { calc.add("1,2,4,\n\n\n") }.to raise_error(ArgumentError, 'Invalid format')
     end
 
-    it 'raises FormatError for "1,2,4, \n\n\n  "' do
+    it 'raises ArgumentError for "1,2,4, \n\n\n  "' do
       expect { calc.add("1,2,4, \n\n\n  ") }.to raise_error(ArgumentError, 'Invalid format')
     end
 
-    it 'raises FormatError for "1,2,,4"' do
+    it 'raises ArgumentError for "1,2,,4"' do
       expect { calc.add("1,2,,4") }.to raise_error(ArgumentError, 'Invalid format')
     end
 
-    it 'raises FormatError for "1,2,4,a"' do
+    it 'raises ArgumentError for "1,2,4,a"' do
       expect { calc.add("1,2,4,a") }.to raise_error(ArgumentError, 'Invalid format')
     end
 
@@ -61,8 +61,20 @@ describe StringCalculator do
       expect(calc.add("//;\n1; 2\n3")).to eq(6)
     end
 
-    it 'raises FormatError for "//;\n1; 2,\n3"' do
+    it 'raises ArgumentError for "//;\n1; 2,\n3"' do
       expect { calc.add("//;\n1; 2,\n3") }.to raise_error(ArgumentError, 'Invalid format')
+    end
+
+    it 'raises ArguementError for negative numbers' do
+      expect { calc.add("//;\n1; 2\n-3") }.to raise_error(ArgumentError, 'negative numbers not allowed -3')
+    end
+
+    it 'should return 10 for "//-\n5-2-3"' do
+      expect(calc.add("//-\n5-2-3")).to eq(10)
+    end
+
+    it 'raises ArguementError for negative numbers' do
+      expect { calc.add("//-\n1--2-3") }.to raise_error(ArgumentError, 'negative numbers not allowed -2')
     end
   end
 end

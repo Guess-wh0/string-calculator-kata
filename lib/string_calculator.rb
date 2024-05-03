@@ -1,18 +1,25 @@
 class StringCalculator
-  INVALID_FORMATS = [/,[\n]*\z/, /,\n*,/, /[^0-9\n,]/].freeze
+  INVALID_FORMATS = [/,[\n]*\z/, /,\n*,/].freeze
+  attr_accessor :expression, :delimiter
 
-  private def valid?(expression= '')
-    INVALID_FORMATS.none? { |exp| exp.match?(expression) }
+  private def valid?
+    char_format = /[^0-9#{delimiter}\n]/
+    (INVALID_FORMATS + [char_format]).none? { |exp| exp.match?(expression) }
   end
 
-  def add(expression='')
-    # clean expression from empty spaces
-    expression.gsub!(' ', '')
+  def add(exp='')
+    @expression = exp
+    @delimiter = ','
     return 0 if expression.empty?
 
-    unless valid?(expression)
-      raise ArgumentError, 'Invalid format'
+    if expression.start_with?('//')
+      @delimiter = expression[2]
+      @expression = expression.split("\n", 2)[1]
     end
-    expression.split(/[,\n]/).map(&:to_i).sum
+
+    @expression.gsub!(' ', '') unless delimiter.match?(/\s/)
+    raise ArgumentError, 'Invalid format' unless valid?
+
+    expression.split(/[#{delimiter}\n]/).map(&:to_i).sum
   end
 end

@@ -52,5 +52,17 @@ describe StringCalculator do
     it 'should return 7 for "1,2,4 \n\n\n  "' do
       expect(calc.add("1,2,4 \n\n\n  ")).to eq(7)
     end
+
+    it 'should recognize delimiter and should return 6 "//;\n1;2;3"' do
+      expect(calc.add("//;\n1;2;3")).to eq(6)
+    end
+
+    it 'should recognize delimiter and should return 6 "//;\n1; 2\n3"' do
+      expect(calc.add("//;\n1; 2\n3")).to eq(6)
+    end
+
+    it 'raises FormatError for "//;\n1; 2,\n3"' do
+      expect { calc.add("//;\n1; 2,\n3") }.to raise_error(ArgumentError, 'Invalid format')
+    end
   end
 end

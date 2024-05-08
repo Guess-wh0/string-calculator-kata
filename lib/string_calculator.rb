@@ -32,6 +32,10 @@ class StringCalculator
     positive_validation
 
     numbers = expression.split(/[#{delimiter}\n]/).map(&:to_i)
-    numbers.sum
+    case delimiter
+    when '*' then numbers.inject(:*)
+    else
+      numbers.sum
+    end
   end
 end

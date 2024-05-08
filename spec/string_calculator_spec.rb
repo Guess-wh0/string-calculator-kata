@@ -92,6 +92,10 @@ describe StringCalculator do
     it 'raises ArguementError for negative numbers' do
       expect { calc.add("//-\n1--2-3") }.to raise_error(ArgumentError, 'negative numbers not allowed -2')
     end
+
+    it 'should multiply when the delimiter is "*" give result 24 for "//*\n2*3\n4"' do
+      expect(calc.add("//*\n2*3\n4")).to eq(24)
+    end
   end
 
   context '#valid_format?' do
